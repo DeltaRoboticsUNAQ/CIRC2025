@@ -1,0 +1,44 @@
+Para tener una conexión exitosa entre Laptop de la base y Jetson del rover a través de ssh, se puede usar la siguiente configuración.
+
+  Laptop ---ethernet---> PoE ---ethernet---> Ubiquiti(base) ---red inalámbrica---> Ubiquiti(rover) ---ethernet---> PoE ---ethernet---> Jetson Nano
+
+  Laptop: 
+  - IP (estática): 192.168.1.10
+  - Subnet mask: 255.255.255.0
+
+  Ubiquit(base):
+  - IP (estática): 192.168.1.20
+  - Subnet mask: 255.255.255.0
+  - SSID: delta
+  - WPA2 (contraseña de la red): Tacocampechano25
+  - Network Mode: Bridge
+  - Wireless Mode: Station WDS
+
+  - user: ubnt
+  - contraseña: Chilepasilla25
+
+  Ubiquit(rover): 
+  - IP (estática): 192.168.1.21
+  - Subnet mask: 255.255.255.0
+  - SSID: delta
+  - WPA2 (contraseña): Tacocampechano25
+  - Network Mode: Bridge
+  - Wireless Mode: Access Point (O Access Point WDS)
+
+  - user: ubnt
+  - contraseña: Tortadetamal24
+    
+  Jetson Nano:
+  - IP (estática): 192.168.1.30
+  - Subnet mask: 255.255.255.0
+
+Es importante que los dispositivos Ubiquiti compartan la misma SSID para que identifiquen que pertenecen a la misma red y se conecten. La contraseña preferentemente debe ser igual también.
+Las IP deben ser estáticas para que no hayan cambios automáticos y deben compartir los primeros 3 números de la IP (192.168.1.x).
+    El último puede ser el que sea, pero en este caso los configuré con 10, 20, 21 y 30.
+
+Para configurar los Ubiquiti se puede conectar a través del PoE siempre con Ethernet a una laptop y escribir su dirección IP en algún buscador. Pedirá usuario y contraseña. No se recomienda mover las configuraciones.
+    Siempre existe la opción de resetear el dispositivo, conectandolo al PoE para encenderlo y presionando un botón en la parte inferior al lado del puerto Ethernet con un objeto delgado por 10 segundos. 
+    En dicho caso, se reiniciaran su configuración a la de fábrica (user: ubnt, contraseña: ubnt, IP: 192.168.1.20).
+
+Esta configuración se basó en una discusión del foro de la comunidad de Ubiquiti encontrado en el siguiente link. 
+https://community.ui.com/questions/Using-Bullet-M2-to-SSH-between-a-Ground-Computer-and-a-Drone/0e87203f-fddf-4c00-ae3c-15adb1fee8a8
