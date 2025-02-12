@@ -1,0 +1,1 @@
+controller_joint_names: ['', 'RL2up_joint', 'RL5Fup_joint', 'FR_joint', 'RL5Mup_joint', 'MR_joint', 'RL2F_joint', 'RL2M_joint', 'LL2up_joint', 'LL5Fup_joint', 'FL_joint', 'LL5Mup_joint', 'ML_joint', 'LL2F_joint', 'LL2M_joint', 'L4up_joint', 'LL6up_joint', 'BL_joint', 'RL6up_joint', 'BR_joint', 'L4low_joint', ]
