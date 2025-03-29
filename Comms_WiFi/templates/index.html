@@ -1,0 +1,44 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>T1LIN</title>
+        <style>
+            body {background-color: #86c5b5; font-family: Verdana, Geneva, Tahoma, sans-serif; text-align: center; margin: 20px; }
+            h1 { color: #333; }
+            .voltage-box {
+                font-size: 24px;
+                font-weight: bold;
+                border: 2px solid #ddd;
+                padding: 20px;
+                width: 200px;
+                margin: auto;
+                background: #f8f8f8;
+            }
+            .current-box {
+                font-size: 24px;
+                font-weight: bold;
+                border: 2px solid #ddd;
+                padding: 20px;
+                width: 200px;
+                margin: auto;
+                background: #f8f8f8;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>T1LIN</h1>
+        <h2>Voltaje</h2>
+        <div class="voltage-box">
+            <pre id="voltage"></pre> 
+        </div>
+        <h2>Corriente</h2>
+        <div class="current-box">
+            <pre id="currents"></pre> 
+        </div>
+        <h3>Video</h3>
+        <img src="{{ url_for('video_feed') }}">
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </body>
+    </html>
