@@ -1352,6 +1352,30 @@
           <spring_stiffness>100</spring_stiffness>
         </dynamics>
       </axis>
-    </joint>
+      </joint>
+      <plugin name="diffential_drive" filename="libgazebo_ros_diff_drive.so">
+  
+        <!--wheel information-->
+  
+        <leftJoint>BL_joint</leftJoint>
+        <rightJoint>BR_joint</rightJoint>
+        <wheelDiameter>0.2</wheelDiameter>
+        <wheelSeparation>0.09998</wheelSeparation>
+  
+        <!--limits-->
+        <wheelTorque>20</wheelTorque>
+        <wheelAcceleration>1.0</wheelAcceleration>
+      
+        <!--output-->
+        <odometryTopic>odom</odometryTopic>
+        <odometryFrame>odom</odometryFrame>
+        <odometrySource>1</odometrySource>
+        <publishWheelTF>false</publishWheelTF>
+        <publishOdom>true</publishOdom>
+        <plublishWheelJointState>false</plublishWheelJointState>
+        <legacyMode>true</legacyMode>
+        <updateRate>1</updateRate>
+        <commandTopic>cmd_vel</commandTopic>
+      </plugin>  
   </gazebo>
 </robot>
