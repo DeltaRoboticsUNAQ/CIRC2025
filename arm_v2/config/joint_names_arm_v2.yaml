@@ -1,0 +1,1 @@
+controller_joint_names: ['', 'bracket_joint', 'actuator_humerus_joint', 'shaft_humerus_joint', 'humerus_low_joint', 'forearm_low_joint', 'actuator_forearm_joint', 'shaft_forearm_joint', ]

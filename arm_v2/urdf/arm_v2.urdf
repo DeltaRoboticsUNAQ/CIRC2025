@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="arm_v2">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0 4.8619E-18 0.0325"
+        rpy="0 0 0" />
+      <mass
+        value="1.2622" />
+      <inertia
+        ixx="0.0027894"
+        ixy="3.0464E-37"
+        ixz="-7.8628E-36"
+        iyy="0.0027894"
+        iyz="-5.0096E-36"
+        izz="0.00469" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.34118 0.66667 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="bracket_link">
+    <inertial>
+      <origin
+        xyz="3.1709E-05 -1.0994E-17 0.021174"
+        rpy="0 0 0" />
+      <mass
+        value="0.1844" />
+      <inertia
+        ixx="0.00016429"
+        ixy="-5.5944E-20"
+        ixz="-1.128E-06"
+        iyy="0.00012823"
+        iyz="-3.7411E-20"
+        izz="0.00017784" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/bracket_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/bracket_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="bracket_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0.056"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="bracket_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.05"
+      friction="0.1" />
+  </joint>
+  <link
+    name="actuator_humerus_link">
+    <inertial>
+      <origin
+        xyz="0.0091905 -1.6846E-16 0.085885"
+        rpy="0 0 0" />
+      <mass
+        value="0.39053" />
+      <inertia
+        ixx="0.0011334"
+        ixy="1.5572E-19"
+        ixz="-0.00034359"
+        iyy="0.0014183"
+        iyz="4.2582E-19"
+        izz="0.0003715" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/actuator_humerus_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/actuator_humerus_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="actuator_humerus_joint"
+    type="revolute">
+    <origin
+      xyz="-0.0318 0 0.056875"
+      rpy="0 0 0" />
+    <parent
+      link="bracket_link" />
+    <child
+      link="actuator_humerus_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.1"
+      friction="0.25" />
+  </joint>
+  <link
+    name="shaft_humerus_link">
+    <inertial>
+      <origin
+        xyz="0.025159 -4.8418E-07 0.087064"
+        rpy="0 0 0" />
+      <mass
+        value="0.056658" />
+      <inertia
+        ixx="0.00014546"
+        ixy="6.4301E-10"
+        ixz="-4.1215E-05"
+        iyy="0.0001574"
+        iyz="2.2272E-09"
+        izz="1.4743E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/shaft_humerus_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/shaft_humerus_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="shaft_humerus_joint"
+    type="prismatic">
+    <origin
+      xyz="0.019073 0 0.066004"
+      rpy="0 0 0" />
+    <parent
+      link="actuator_humerus_link" />
+    <child
+      link="shaft_humerus_link" />
+    <axis
+      xyz="0.27761 0 0.96069" />
+    <limit
+      lower="0"
+      upper="0.3"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.1"
+      friction="1.00" />
+  </joint>
+  <link
+    name="humerus_link">
+    <inertial>
+      <origin
+        xyz="0.037068 -0.027 0.21239"
+        rpy="0 0 0" />
+      <mass
+        value="0.23656" />
+      <inertia
+        ixx="0.0024439"
+        ixy="6.3046E-18"
+        ixz="-0.00033966"
+        iyy="0.0023823"
+        iyz="-1.3656E-19"
+        izz="0.00028041" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/humerus_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/humerus_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="humerus_low_joint"
+    type="revolute">
+    <origin
+      xyz="0.02545 0.027 0.0267"
+      rpy="0 0 0" />
+    <parent
+      link="bracket_link" />
+    <child
+      link="humerus_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.1"
+      friction="0.25" />
+  </joint>
+  <link
+    name="forearm_link">
+    <inertial>
+      <origin
+        xyz="0.12305 -0.024 -0.010891"
+        rpy="0 0 0" />
+      <mass
+        value="0.18818" />
+      <inertia
+        ixx="0.00014001"
+        ixy="3.5309E-20"
+        ixz="6.5137E-05"
+        iyy="0.00081388"
+        iyz="4.9832E-21"
+        izz="0.00087088" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/forearm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/forearm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="forearm_low_joint"
+    type="revolute">
+    <origin
+      xyz="0.070135 -0.003 0.3874"
+      rpy="0 0 0" />
+    <parent
+      link="humerus_link" />
+    <child
+      link="forearm_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.1"
+      friction="0.25" />
+  </joint>
+  <link
+    name="actuator_forearm_link">
+    <inertial>
+      <origin
+        xyz="0.075992 -0.00889 0.04106"
+        rpy="0 0 0" />
+      <mass
+        value="0.39053" />
+      <inertia
+        ixx="0.00072202"
+        ixy="-1.5775E-19"
+        ixz="-0.00051211"
+        iyy="0.0014183"
+        iyz="-1.2292E-19"
+        izz="0.00078291" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/actuator_forearm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/actuator_forearm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="actuator_forearm_joint"
+    type="revolute">
+    <origin
+      xyz="0.051816 -0.01811 0.18991"
+      rpy="0 0 0" />
+    <parent
+      link="humerus_link" />
+    <child
+      link="actuator_forearm_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.1"
+      friction="0.25" />
+  </joint>
+  <link
+    name="shaft_forearm_link">
+    <inertial>
+      <origin
+        xyz="0.07103 -4.8425E-07 0.056284"
+        rpy="0 0 0" />
+      <mass
+        value="0.056658" />
+      <inertia
+        ixx="6.2439E-05"
+        ixy="1.8168E-09"
+        ixz="-7.5222E-05"
+        iyy="0.0001574"
+        iyz="1.4403E-09"
+        izz="9.7763E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/shaft_forearm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_v2/meshes/shaft_forearm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="shaft_forearm_joint"
+    type="prismatic">
+    <origin
+      xyz="0.063117 -0.00889 0.050013"
+      rpy="0 0 0" />
+    <parent
+      link="actuator_forearm_link" />
+    <child
+      link="shaft_forearm_link" />
+    <axis
+      xyz="0.78377 0 0.62105" />
+    <limit
+      lower="0"
+      upper="0.3"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.1"
+      friction="1.00" />
+  </joint>
+  <gazebo>
+    <joint name="humerus_extra_joint" type="revolute">
+      <pose relative_to='shaft_humerus_link'>0.04861899840 0.027000 0.16824910307 0 0 0</pose>
+      <type>revolute</type>
+      <parent>shaft_humerus_link</parent>
+      <child>humerus_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.5</lower>
+          <upper>1.5</upper>
+        </limit>
+        <dynamics>
+          <damping>0.5</damping>
+          <friction>0.05</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>100</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <joint name="forearm_extra_joint" type="revolute">
+      <pose relative_to='shaft_forearm_link'>0.13726375011 0.024000 0.10876686349 0 0 0</pose>
+      <type>revolute</type>
+      <parent>shaft_forearm_link</parent>
+      <child>forearm_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.5</lower>
+          <upper>1.5</upper>
+        </limit>
+        <dynamics>
+          <damping>0.5</damping>
+          <friction>0.05</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>100</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+  </gazebo>
+</robot>
