@@ -705,4 +705,44 @@
       damping="0.1"
       friction="0.25" />
   </joint>
+  <gazebo>
+    <joint name="humerus_extra_joint" type="revolute">
+      <pose relative_to='shaft_humerus_link'>0.04861899840 0.027000 0.16824910307 0 0 0</pose>
+      <type>revolute</type>
+      <parent>shaft_humerus_link</parent>
+      <child>humerus_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.5</lower>
+          <upper>1.5</upper>
+        </limit>
+        <dynamics>
+          <damping>0.5</damping>
+          <friction>0.05</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>100</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <joint name="forearm_extra_joint" type="revolute">
+      <pose relative_to='shaft_forearm_link'>0.13726375011 0.024000 0.10876686349 0 0 0</pose>
+      <type>revolute</type>
+      <parent>shaft_forearm_link</parent>
+      <child>forearm_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.5</lower>
+          <upper>1.5</upper>
+        </limit>
+        <dynamics>
+          <damping>0.5</damping>
+          <friction>0.05</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>100</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+  </gazebo>
 </robot>
