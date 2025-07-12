@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+import rospy
+from geometry_msgs.msg import Twist
+import serial
+
+class ChassisControl:
+    def __init__(self, serial_port='/dev/ttyACM0', baudrate=115200):
+        self.ser = serial.Serial(serial_port, baudrate, timeout=1)
+        rospy.init_node('chassis_control')
+        rospy.Subscriber('cmd_vel', Twist, self.cmd_vel_callback)
+        rospy.loginfo("ChassisControl node started, listening to cmd_vel.")
+
+    def cmd_vel_callback(self, msg):
+        # Extraer velocidades lineal y angular
+        linear = msg.linear.x
+        angular = msg.angular.z
+        # Comando formateado
+        command = f"{linear:.2f},{angular:.2f}\n"
+        self.ser.write(command.encode('utf-8'))
+        rospy.loginfo(f"Sent to Arduino: {command.strip()}")
+
+    def run(self):
+        rospy.spin()
+        self.ser.close()
+
+if __name__ == '__main__':
+    try:
+        controller = ChassisControl()
+        controller.run()
+    except rospy.ROSInterruptException:
+        pass
