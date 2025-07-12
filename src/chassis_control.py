@@ -4,6 +4,8 @@ import rospy
 from geometry_msgs.msg import Twist
 import serial
 
+from packetSerial import SerialHandler
+
 class ChassisControl:
     def __init__(self, serial_port='/dev/ttyACM0', baudrate=115200):
         self.ser = serial.Serial(serial_port, baudrate, timeout=1)
@@ -22,7 +24,6 @@ class ChassisControl:
 
     def run(self):
         rospy.spin()
-        self.ser.close()
 
 if __name__ == '__main__':
     try:
