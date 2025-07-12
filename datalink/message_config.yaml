@@ -1,0 +1,24 @@
+messages:
+  TEMP:
+    fields: [sensor_id, temperature, unit]
+    types: [int, float, str]
+    
+  IMU:
+    fields: [accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z]
+    types: [float, float, float, float, float, float]
+
+  STATUS:
+    fields: [motor_enabled, error_code, battery_low]
+    types: [bool, int, bool]
+
+  GPS:
+    fields: [gps_x, gps_y] 
+    types: [float, float]
+  
+  TWIST:
+    fields: [linear, angular]
+    types: [int, int]
+
+  DEBUG:
+    fields: [message]
+    types: [str]
