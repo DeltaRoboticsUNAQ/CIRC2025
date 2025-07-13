@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="rover_package" type="app.py" name="app_node" output="screen" />
+    <node pkg="rover_package" type="chassis_control.py" name="chassis_control_node" output="screen" />
+</launch>

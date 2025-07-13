@@ -15,12 +15,12 @@ class ChassisControl:
 
     def cmd_vel_callback(self, msg):
         # Extraer velocidades lineal y angular
-        linear = msg.linear.x
-        angular = msg.angular.z
+        linear = int(msg.linear.x)
+        angular = int(msg.angular.z)
         # Comando formateado
-        command = f"{linear:.2f},{angular:.2f}\n"
+        command = f"{linear},{angular}\n"
         self.ser.write(command.encode('utf-8'))
-        rospy.loginfo(f"Sent to Arduino: {command.strip()}")
+        rospy.loginfo(f"\nSent to Arduino: {command.strip()}")
 
     def run(self):
         rospy.spin()
