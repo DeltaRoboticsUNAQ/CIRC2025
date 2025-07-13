@@ -24,7 +24,7 @@ function sendVelocities(linear, angular) {
         body: JSON.stringify({ linear : linear, angular : angular})
     })
     .then(response => response.json())
-    .then(data = console.log("Respuesta del servidor:", data))
+    .then(data => console.log("Respuesta del servidor:", data))
     .catch(error => console.error("Error enviando comando:", error));
 }
 

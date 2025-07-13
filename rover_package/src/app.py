@@ -12,7 +12,7 @@ import rospy
 
 import cv2
 
-from std_msgs.msg import Twist
+from geometry_msgs.msg import Twist
 
 from packetSerial import SerialHandler
 from camera import gen_aruco
@@ -29,7 +29,7 @@ esp32_config = {
         "baudrate": 115200, 
         "id": 0x40}
 
-esp32Handler = SerialHandler(esp32_config["port"], esp32_config["baudrate"], esp32_config["id"])
+esp32Handler = SerialHandler(esp32_config)
 
 # //////////////////////////////////////////////////////////////////
 # FLASK SERVER
@@ -64,13 +64,13 @@ def get_currents():
 def gps_event():
     while True:
         try: 
-            header, data = esp32Handler.parse_line
+            header, data = esp32Handler.parse_line()
             if header == 'GPS':
                 try:
                     gps_x = data['gps_x']
                     gps_y = data['gps_y']
                     
-                    yield f"data: {gps_x}, {gps_y}\n\n"
+                    yield f"data:{gps_x},{gps_y}\n\n"
                 except ValueError:
                     continue
             time.sleep(0.1)
@@ -80,7 +80,8 @@ def gps_event():
 @app.route('/gps_stream')
 def gps_stream():
     return Response(gps_event(), mimetype='text/event-stream')       
-                    
+        
+
 # CONTROL
 @app.route('/velocities', methods=['GET', 'POST'])
 def receive_velocities():

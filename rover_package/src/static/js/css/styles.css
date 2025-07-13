@@ -1,0 +1,38 @@
+body {background-color:rgb(57, 110, 102); font-family: Verdana, Geneva, Tahoma, sans-serif; text-align: center; margin: 20px; }
+h1 { color: #333; }
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+.info-column, .video-column {
+    flex: 1;
+}
+
+.voltage-box {
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid #ddd;
+    padding: 20px;
+    width: 200px;
+    margin: auto;
+    background: #f8f8f8;
+}
+.current-box {
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid #ddd;
+    padding: 20px;
+    width: 200px;
+    margin: auto;
+    background: #f8f8f8;
+}
+.gps-box {
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid #ddd;
+    padding: 20px;
+    width: 200px;
+    margin: auto;
+    background: #f8f8f8;
+}

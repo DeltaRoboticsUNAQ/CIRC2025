@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T1LIN</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="info-column">
+            <h1>T1LIN</h1>
+            <h2>Voltaje</h2>
+            <div class="voltage-box">
+                <pre id="voltage"></pre> 
+            </div>
+            <h2>Corriente</h2>
+            <div class="current-box">
+                <pre id="currents"></pre> 
+            </div>
+            <div class="gps-box">
+                <pre id="gps_x"></pre>
+                <pre id="gps_y"></pre>
+        </div>
+        <h3>Video</h3>
+        </div class="video-column">
+            <img src="{{ url_for('video_feed') }}">
+            <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+        </div>
+    </div>
+</body>
+</html>
