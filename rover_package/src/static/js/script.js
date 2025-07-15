@@ -71,9 +71,9 @@ function startGPSStream() {
 
     eventSource.onmessage = function(event) {
         try {
-            const [gps_x, gps_y] = event.data.split(",")
-            document.getElementById("gps_x").textContent = gps_x;
-            document.getElementById("gps_y").textContent = gps_y;
+            const data = JSON.parse(event.data);
+            document.getElementById("gps_x").textContent = data.gps_x;
+            document.getElementById("gps_y").textContent = data.gps_y;
         } catch (error) {
             console.error("Error parsing gps stream data", error);
         }

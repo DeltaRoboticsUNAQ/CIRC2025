@@ -6,8 +6,8 @@ import serial
 from serial import SerialException
 
 from flask import Flask, request, Response, jsonify, render_template
+import json
 
-from roboclaw_3 import RoboClaw
 import rospy 
 
 import cv2
@@ -70,7 +70,7 @@ def gps_event():
                     gps_x = data['gps_x']
                     gps_y = data['gps_y']
                     
-                    yield f"data:{gps_x},{gps_y}\n\n"
+                    yield f"data: {json.dumps({'gps_x': gps_x, 'gps_y': gps_y})}\n\n"
                 except ValueError:
                     continue
             time.sleep(0.1)
