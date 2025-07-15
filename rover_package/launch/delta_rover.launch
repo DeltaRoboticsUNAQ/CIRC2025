@@ -1,4 +1,8 @@
 <launch>
+    <param name="esp32_port" type="str" value="/dev/ttyUSB0"/>
+    <param name="esp32_baudrate" type="int" value="115200"/>
+
     <node pkg="rover_package" type="app.py" name="app_node" output="screen" />
     <node pkg="rover_package" type="chassis_control.py" name="chassis_control_node" output="screen" />
+    <node pkg="rover_package" type="gps_serial.py" name="gps_serial_node" output="screen" />
 </launch>
