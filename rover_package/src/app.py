@@ -13,7 +13,6 @@ import json
 import rospy 
 
 import cv2
-
 from geometry_msgs.msg import Twist
 
 # FLASK SERVER

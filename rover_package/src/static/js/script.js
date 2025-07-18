@@ -62,8 +62,8 @@ function sendVelocities(linearV, angularV) {
 // Escuchar el tópico a donde se publicann los mensajes GPS
 const gpsListener = new ROSLIB.Topic({
     ros : ros,
-    name : '/gps/fix',
-    messageType : 'sensor_msgs/NavSatFix'
+    name : '/gps_coords',
+    messageType : 'geometry_msgs/Vector3'
 });
 
 gpsListener.subscribe(function (message) {
