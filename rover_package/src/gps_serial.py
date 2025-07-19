@@ -43,6 +43,7 @@ def main():
             msg.z = alt
             
             pub.publish(msg)
+            rospy.loginfo(f"Publishing GPS: {msg.x}, {msg.y}")
             
         except Exception as e:
             rospy.logwarn(f"Error leyendo/parsing: {e}")
