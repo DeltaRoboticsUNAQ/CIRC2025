@@ -1,4 +1,8 @@
+#!/usr/bin/env python3
+
 import roslibpy
+
+import requests
 
 import hid
 from keyboard import is_pressed, read_key
@@ -6,39 +10,161 @@ import pygame
 
 from time import sleep
 from time import time
+import logging
 import numpy as np
 
+DELAY = 0.5
+HUMERUS_POS_URL = 'http://192.168.1.30:5000/move_humerus/'
+FOREARM_POS_URL = 'http://192.168.1.30:5000/move_forearm/'
+
+def move_slider(value, url):
+    url = f"{url}{value}"
+    try:
+        response = requests.get(url)
+        print(response.text)
+    except Exception  as e:
+        print("Error sending value:", e)
+
 # Open joystick dev
-for device in hid.enumerate():
-    print(f"0x{device['vendor_id']:04x}:0x{device['product_id']:04x} {device['product_string']}")
+def open_joystick():
+    for device in hid.enumerate():
+        print(f"0x{device['vendor_id']:04x}:0x{device['product_id']:04x} {device['product_string']}")
+        
+    joystick = hid.device()
+    joystick.open(0x12bd, 0xa02f)
+    joystick.set_nonblocking(True)
+
+    print("Initializing joystick...")
+    sleep(1.5)
+    print("Ready")
     
-joystick = hid.device()
-joystick.open(0x12bd, 0xa02f)
-joystick.set_nonblocking(True)
+    return joystick
 
-ros = roslibpy.Ros(host='localhost', port=9090)
-ros.run()
-
-vel_pub = roslibpy.Topic(ros, '/cmd_vel', 'geometry_msgs/Twist')
-
-while ros.is_connected:
+def handle_joystick_input():
+    global t
+    global last_t
     
     t = time()
-    linear = 0.0
-    angular = 0.0
+    report = joystick.read(64)
+    if report and (last_t - t < DELAY):
+        #print(report)
+        buttons = {
+            'trigger': report[6]==1,
+            'button2': report[6]==2,
+            'button3': report[6]==4,
+            'button4': report[6]==8,
+            'button5': report[6]==16,
+            'button6': report[6]==32,
+            'button7': report[6]==64,
+            'button8': report[6]==128,
+            'button9': report[7]==1,
+            'button10': report[7]==2,
+            'button11': report[7]==4,
+            'button12': report[7]==8,
+        }
+        
+        for b in buttons:
+            if buttons[b]:
+                print(b)
     
-    last_linear = linear # Update last linear
-    last_angular = angular # Update last angular
+        sticks = {
+            'laterial': report[0],
+            'front': report[1],
+            'twist': report[2],
+            'throttle': report[4],
+        }
+        for s in sticks:
+            if abs(sticks[s]-last_sticks[s]) > 20:
+                print(f'{s} : {sticks[s]}')
+                last_sticks[s] = sticks[s]
+                
+        last_t = t
+        
+        # Humerus update
+        if sticks['front']!=last_sticks['front']:
+            response = requests.get("http://192.168.1.30/get_humerus_pos")
+            last_value = response.json()['value']
+            new_value = last_value + sticks['lateral'] - 127
+            print(new_value)
+            arm_pub.publish(new_value)
+            move_slider(new_value, HUMERUS_POS_URL)
+    
+
+if __name__ == '__main__':
+    # ROS websocket
+    ros = roslibpy.Ros(host='192.168.1.30', port=9090)
+    ros.run()
+    
+    # Chassis velocity publisher
+    vel_pub = roslibpy.Topic(ros, '/cmd_vel', 'geometry_msgs/Twist')
+    
+    # Arm humerus and forearm publisher
+    arm_pub = roslibpy.Topic(ros, '/actuators/command', 'std_msgs/Int16MultiArray')
+    
+    joystick = open_joystick()
     
     report = joystick.read(64)
-    if report:
-        print(report)
-        linear = report[]
+    last_sticks = {
+        'laterial': report[0],
+        'front': report[1],
+        'twist': report[2],
+        'throttle': report[4],
+    }
+    last_t = time()
+
+    linear = 0.0
+    angular = 0.0
+
+    humerus_pos = 100
+    forearm_pos = 100
+
+    wrist_right_pos = 0
+    wrist_left_pos = 0
+
+    base_pos = 0
+    end_effector_pos = 0
+    
+    while ros.is_connected:
         
-        vel_pub.publish(roslibpy.Message({
-        'linear': {'x':linear, 'y':0.0, 'z':0.0},
-        'angular': {'x': 0.0, 'y':0.0, 'z':angular}
-        }))
-    
-    sleep(0.1)
-    
+        t = time()
+        report = joystick.read(64)
+        if report and (last_t - t < DELAY):
+            #print(report)
+            buttons = {
+                'trigger': report[6]==1,
+                'button2': report[6]==2,
+                'button3': report[6]==4,
+                'button4': report[6]==8,
+                'button5': report[6]==16,
+                'button6': report[6]==32,
+                'button7': report[6]==64,
+                'button8': report[6]==128,
+                'button9': report[7]==1,
+                'button10': report[7]==2,
+                'button11': report[7]==4,
+                'button12': report[7]==8,
+            }
+            
+            for b in buttons:
+                if buttons[b]:
+                    print(b)
+        
+            sticks = {
+                'laterial': report[0],
+                'front': report[1],
+                'twist': report[2],
+                'throttle': report[4],
+            }
+            for s in sticks:
+                if abs(sticks[s]-last_sticks[s]) > 20:
+                    print(f'{s} : {sticks[s]}')
+                    last_sticks[s] = sticks[s]
+                    
+            last_t = t
+            
+            if sticks['front']!=last_sticks['front']:
+                response = requests.get("http://192.168.1.30/get_humerus_pos")
+                last_value = response.json()['value']
+                new_value = last_value + sticks['lateral'] - 127
+                print(new_value)
+                move_slider(new_value, HUMERUS_POS_URL)

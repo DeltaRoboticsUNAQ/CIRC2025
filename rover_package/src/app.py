@@ -3,20 +3,45 @@
 # Servidor de Flask que se usa principalmente para:
 # - Servir el HTML de la interfaz
 # - Facilitar la visualización del marcado del Aruco en la página principal. 
+# - Asistir funciones para actualizar sliders.
 
 from time import sleep
 import time
 
 from flask import Flask, request, Response, jsonify, render_template
+from flask_socketio import SocketIO, emit
+
 import json
+import response
 
 import rospy 
+from std_msgs import Int8, Int16MultiArray
 
 import cv2
 from geometry_msgs.msg import Twist
 
 # FLASK SERVER
 app = Flask(__name__)
+socketio = SocketIO(app)
+
+# Nodo de ROS
+rospy.init_node('web_server', anonymous=True)
+aruco_publisher = rospy.Publisher('/aruco', Int8, queue_size=10)
+
+humerus_pos = 0
+forearm_pos = 0
+
+def arm_callback(data):
+    global humerus_pos 
+    global forearm_pos
+    
+    humerus_pos = data[0]
+    forearm_pos = data[1]
+    
+    move_humerus_slider(humerus_pos)
+    move_forearm_slider(forearm_pos)
+    
+arm_subscriber = rospy.Subscriber('/actuators/command', Int16MultiArray, arm_callback)
 
 @app.route('/')
 def index():
@@ -27,11 +52,6 @@ def index():
 
 # Diccionario de aruco usado
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_5X5_100)
-# ROS
-
-# Nodo de ROS
-rospy.init_node('server_aruco', anonymous=True)
-aruco_publisher = rospy.Publisher('/aruco', Twist, queue_size=10)
 
 def gen_aruco(cam):
     while True:
@@ -67,7 +87,31 @@ def video_feed():
     camera = cv2.VideoCapture(0, cv2.CAP_V4L2)
     return Response(gen_aruco(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+    
+@socketio.on('set_slider')
+def handle_set_slider(data):
+    global current_value
+    current_value = data['value']
+    emit('update_slider', data, broadcast=True)
+
+@app.route('/move_humerus/<int:value>')
+def move_humerus_slider(value):
+    global humerus_pos
+    humerus_pos = value
+    socketio.emit('update_slider', {'value': value})
+    return f"Forearm slider moved to {value}"
+
+@app.route('/move_forearm/<int:value>')
+def move_forearm_slider(value):
+    global forearm_pos
+    forearm_pos = value
+    socketio.emit('update_slider', {'value': value})
+    return f"Forearm slider moved to {value}"
+    
+@app.route('/get_humerus_pos')
+def get_humerus_pos():
+    return jsonify({'value' : humerus_pos})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    socketio.run(app, debug=True, port=5000)
     

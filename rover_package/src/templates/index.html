@@ -25,10 +25,23 @@
                 <pre id="latitude"></pre>
                 <pre id="longitude"></pre>
                 <pre id="altitude"></pre>
+            </div>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="1000" value="100" class="slider" id="humerus_pos">
+                <p>Value: <span id="humerus_demo"></span></p>
+                <input type="number" id="humerus_pos_input" min="1" max="1000" placeholder="Escribe un valor (1-1000)">
+            </div>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="1000" value="100" class="slider" id="forearm_pos">
+                <p>Value: <span id="forearm_demo"></span></p>
+                <input type="number" id="forearm_pos_input" min="1" max="1000" placeholder="Escribe un valor (1-1000)">
+            </div>
         </div>
         <h3>Video</h3>
         <div class="video-column">
             <img src="{{ url_for('video_feed') }}">
+            <script src="{{ url_for('static', filename='js/roslib.min.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
             <script src="{{ url_for('static', filename='js/script.js') }}"></script>
         </div>
     </div>
