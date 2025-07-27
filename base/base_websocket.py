@@ -40,6 +40,19 @@ def open_joystick():
     
     return joystick
 
+# Update position and move_slider
+def update(sticks, last_sticks, s, url):
+    if abs(sticks[s]-last_sticks[s])>20:
+            try:
+                response = requests.get(url)
+                last_value = response.json()['value']
+                forearm_pos = last_value + sticks[s] - 127
+                move_slider(forearm_pos, FOREARM_POS_URL)
+                return True
+            except:
+                return False
+        
+# Obtener input de joystick y publicarlo/mandarlo al servidor
 def handle_joystick_input():
     global t
     global last_t
@@ -73,21 +86,15 @@ def handle_joystick_input():
             'twist': report[2],
             'throttle': report[4],
         }
-        for s in sticks:
-            if abs(sticks[s]-last_sticks[s]) > 20:
-                print(f'{s} : {sticks[s]}')
-                last_sticks[s] = sticks[s]
-                
-        last_t = t
         
-        # Humerus update
-        if sticks['front']!=last_sticks['front']:
-            response = requests.get("http://192.168.1.30/get_humerus_pos")
-            last_value = response.json()['value']
-            new_value = last_value + sticks['lateral'] - 127
-            print(new_value)
-            arm_pub.publish(new_value)
-            move_slider(new_value, HUMERUS_POS_URL)
+        humerus_updated = update(sticks, last_sticks, 'front', 'http://192.168.1.30/get_humerus_pos')
+        forearm_updated = update(sticks, last_sticks, 'front', 'http://192.168.1.30/get_forearm_pos')
+            
+        if (humerus_updated and forearm_updated):
+            message = {'data' : [humerus_pos, forearm_pos, 0.0]}
+            arm_pub.publish(message)
+            humerus_updated = False
+            forearm_updated = False
     
 
 if __name__ == '__main__':
@@ -125,46 +132,4 @@ if __name__ == '__main__':
     end_effector_pos = 0
     
     while ros.is_connected:
-        
-        t = time()
-        report = joystick.read(64)
-        if report and (last_t - t < DELAY):
-            #print(report)
-            buttons = {
-                'trigger': report[6]==1,
-                'button2': report[6]==2,
-                'button3': report[6]==4,
-                'button4': report[6]==8,
-                'button5': report[6]==16,
-                'button6': report[6]==32,
-                'button7': report[6]==64,
-                'button8': report[6]==128,
-                'button9': report[7]==1,
-                'button10': report[7]==2,
-                'button11': report[7]==4,
-                'button12': report[7]==8,
-            }
-            
-            for b in buttons:
-                if buttons[b]:
-                    print(b)
-        
-            sticks = {
-                'laterial': report[0],
-                'front': report[1],
-                'twist': report[2],
-                'throttle': report[4],
-            }
-            for s in sticks:
-                if abs(sticks[s]-last_sticks[s]) > 20:
-                    print(f'{s} : {sticks[s]}')
-                    last_sticks[s] = sticks[s]
-                    
-            last_t = t
-            
-            if sticks['front']!=last_sticks['front']:
-                response = requests.get("http://192.168.1.30/get_humerus_pos")
-                last_value = response.json()['value']
-                new_value = last_value + sticks['lateral'] - 127
-                print(new_value)
-                move_slider(new_value, HUMERUS_POS_URL)
+        handle_joystick_input()

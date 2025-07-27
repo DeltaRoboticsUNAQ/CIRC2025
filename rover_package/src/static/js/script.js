@@ -65,6 +65,7 @@ socket.on('update_humerus_slider', function(data) {
 });
 
 
+
 /////////// ROS /////////////
 
 // Añadir nodo de ROS

@@ -112,6 +112,10 @@ def move_forearm_slider(value):
 def get_humerus_pos():
     return jsonify({'value' : humerus_pos})
 
+@app.route('/get_forearm_pos')
+def get_forearm_pos():
+    return jsonify({'value': forearm_pos})
+
 if __name__ == '__main__':
     socketio.run(app, debug=True, port=5000)
     
