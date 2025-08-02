@@ -24,13 +24,17 @@ from geometry_msgs.msg import Twist
 app = Flask(__name__)
 socketio = SocketIO(app)
 
+# ROS
+# Publishers
+# - 
+
 # Nodo de ROS
 rospy.init_node('web_server', anonymous=True)
 aruco_publisher = rospy.Publisher('/aruco', Int8, queue_size=10)
 
+# 
 humerus_pos = 0
 forearm_pos = 0
-
 def arm_callback(data):
     global humerus_pos 
     global forearm_pos

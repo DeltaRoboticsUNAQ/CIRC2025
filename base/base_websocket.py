@@ -51,12 +51,13 @@ def update(sticks, last_sticks, s, url):
                 return True
             except:
                 return False
+    else:
+        return False
         
 # Obtener input de joystick y publicarlo/mandarlo al servidor
 def handle_joystick_input():
-    global t
-    global last_t
     
+    global last_t
     t = time()
     report = joystick.read(64)
     if report and (last_t - t < DELAY):
@@ -90,11 +91,9 @@ def handle_joystick_input():
         humerus_updated = update(sticks, last_sticks, 'front', 'http://192.168.1.30/get_humerus_pos')
         forearm_updated = update(sticks, last_sticks, 'front', 'http://192.168.1.30/get_forearm_pos')
             
-        if (humerus_updated and forearm_updated):
+        if (humerus_updated or forearm_updated):
             message = {'data' : [humerus_pos, forearm_pos, 0.0]}
             arm_pub.publish(message)
-            humerus_updated = False
-            forearm_updated = False
     
 
 if __name__ == '__main__':
