@@ -14,20 +14,17 @@ from flask_socketio import SocketIO, emit
 import json
 import response
 
-import rospy 
-from std_msgs import Int8, Int16MultiArray
-
 import cv2
-from geometry_msgs.msg import Twist
+
+import rospy 
+from std_msgs.msg import Int8, Int16MultiArray
+from geometry_msgs.msg import Twist, Vector3
 
 # FLASK SERVER
 app = Flask(__name__)
 socketio = SocketIO(app)
 
 # ROS
-# Publishers
-# - 
-
 # Nodo de ROS
 rospy.init_node('web_server', anonymous=True)
 aruco_publisher = rospy.Publisher('/aruco', Int8, queue_size=10)

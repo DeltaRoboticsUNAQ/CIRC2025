@@ -7,7 +7,7 @@ import serial
 from packetSerial import SerialHandler
 
 class ChassisControl:
-    def __init__(self, serial_port='/dev/ttyACM0', baudrate=115200):
+    def __init__(self, serial_port='/dev/ttyACM0', baudrate=9600):
         self.ser = serial.Serial(serial_port, baudrate, timeout=1)
         rospy.init_node('chassis_control')
         rospy.Subscriber('cmd_vel', Twist, self.cmd_vel_callback)

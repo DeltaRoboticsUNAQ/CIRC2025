@@ -13,8 +13,8 @@ from time import time
 DELAY = 0.05
 DRIFT = 0.1
 THRESHOLD = 0.05
-ARM_SENSITIVITY = 100.0
-WRIST_SENSITIVITY = 100.0
+ARM_SENSITIVITY = 1
+WRIST_SENSITIVITY = 1
 SATURN_MOTOR_ENCODER_PULSES = 2500
 
 # /////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ button_names = {
     14: 'Right'
 }
 
-# Revisar estado previo para detectar cambios y evitar prints repetidos
+# Revisar estado previo para detectar cambios y evitar inputs repetidos
 buttons_prev_states = [False] * joystick.get_numbuttons()
 axis_prev = [0.0] * joystick.get_numaxes()
 hat_prev = (0, 0)
@@ -95,6 +95,7 @@ def change_mode():
     global mode_idx
     global modes
     mode_idx = (mode_idx + 1) % len(modes)
+    print(f"Switched to {modes[mode_idx]} mode.")
 
 def chassis_command(event):
     if event == 'Up':

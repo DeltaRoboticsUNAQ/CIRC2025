@@ -108,7 +108,7 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
-// Enviar comandos de WASD
+// Enviar comandos
 function sendVelocities(linearV, angularV) {
     // Crear mensaje tipo Twist
     var twist = new ROSLIB.Message({
