@@ -1,6 +1,8 @@
 # Programa para recibir inputs de un control de PS4 para controlar rover a través de roslibpy. 
 # Para Windows 11
 
+# Actualizado desde GitHub!
+
 import pygame
 import sys
 
