@@ -2,7 +2,7 @@
 
 import rospy
 import serial
-from std_msgs.msg import Int32MultiArray, Int32
+from std_msgs.msg import Int16MultiArray, Int16
 
 # Configura el puerto serial con el Arduino
 arduino = None
@@ -37,7 +37,7 @@ def wrist_callback(msg):
     else:
         rospy.logwarn("Mensaje de wrist inválido (faltan valores)")
 
-def actuadores_lineales_callback(msg):
+def actuators_callback(msg):
     """
     Callback para actuadores lineales y base.
     Espera 3 enteros: target1, target2, dirección base (-1, 0, 1).
@@ -62,7 +62,7 @@ def main():
     rospy.init_node("arm_controller_node")
 
     # Parámetros configurables por ROS param
-    port = rospy.get_param("~port", "/dev/ttyUSB0")
+    port = rospy.get_param("~port", "/dev/ttyACM1")
     baud = rospy.get_param("~baud", 9600)
 
     try:
@@ -73,10 +73,10 @@ def main():
         return
 
     # Suscriptores
-    rospy.Subscriber("/gripper_cmd", Int32, gripper_callback)
-    rospy.Subscriber("/wrist_cmd", Int32MultiArray, wrist_callback)
-    rospy.Subscriber("/actuadores_lineales_cmd", Int32MultiArray, actuadores_lineales_callback)
-    rospy.Subscriber("/base_cmd", Int32, base_callback)
+    rospy.Subscriber("/gripper_cmd", Int16, gripper_callback)
+    rospy.Subscriber("/wrist_cmd", Int16MultiArray, wrist_callback)
+    rospy.Subscriber("/actuators_cmd", Int16MultiArray, actuators_callback)
+    rospy.Subscriber("/base_cmd", Int16, base_callback)
 
     rospy.loginfo("Nodo de control de brazo iniciado. Esperando comandos...")
     rospy.spin()

@@ -1,6 +1,8 @@
 # Programa para recibir inputs de un control de PS4 para controlar rover a través de roslibpy. 
 # Para Windows 11
 
+# Actualizado desde VSCode 
+
 import pygame
 import sys
 
@@ -230,6 +232,7 @@ def arm_axis_command(axis_values):
     try:
         arm_message = {'data' : [humerus_pos, forearm_pos, 0.0]}
         arm_pub.publish(arm_message)
+        sleep(1)
         
         humerus_last_pos = humerus_pos
         forearm_last_pos = forearm_pos
@@ -271,8 +274,9 @@ def handle_axis(axis_values):
     elif modes[mode_idx] == "Arm":
         arm_axis_command(axis_values)
     elif modes[mode_idx] == "End Effector":
-        ef_axis_command(axis_values)
-
+        print("End effector mode active!")
+        sleep(1)
+        
 def full_stop():
     print("Full stop")
     sleep(5)
