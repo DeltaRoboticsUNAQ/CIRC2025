@@ -4,6 +4,6 @@
 
     <node pkg="rover_package" type="app.py" name="app_node" output="screen" />
     <node pkg="rover_package" type="chassis_control.py" name="chassis_control_node" output="screen" />
-    <node pkg="rover_package" type="gps_serial.py" name="gps_serial_node" output="screen" />
-    <node pkg="rover_package" type="traversal_tilt_control.py" name="tilt_control_node" output="screen" />
+    <node pkg="rover_package" type="esp32_sensors.py" name="sensors_node" output="screen" />
+    <node pkg="rover_package" type="arm_control.py" name="arm_forward_node" output="screen" />
 </launch>

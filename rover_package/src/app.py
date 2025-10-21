@@ -83,11 +83,19 @@ def gen_aruco(cam):
 
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + jpeg_bytes + b'\r\n')
 
-@app.route('/video_feed')
-def video_feed():
+@app.route('/webcam_video_feed')
+def webcam_video_feed():
     camera = cv2.VideoCapture(0, cv2.CAP_V4L2)
     return Response(gen_aruco(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+rtsp_url = "rtsp://admin:admin@192.168.1.30:554/cam/realmonitor?channel=1&subtype=0"
+
+@app.route('/ip_video_feed')
+def ip_video_feed():
+    camera = cv2.VideoCapture(rtsp_url)
+    return Response(gen_aruco(camera),
+                    mimetype='multipart/x-mixed-replace; boundary=frame') 
     
 @socketio.on('set_slider')
 def handle_set_slider(data):

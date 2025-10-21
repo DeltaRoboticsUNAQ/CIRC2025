@@ -39,11 +39,14 @@
         </div>
         <h3>Video</h3>
         <div class="video-column">
-            <img src="{{ url_for('video_feed') }}">
-            <script src="{{ url_for('static', filename='js/roslib.min.js') }}"></script>
-            <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
-            <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+            <img src="{{ url_for('webcam_video_feed') }}">
         </div>
+        <div class="video-column">
+            <img src="{{ url_for('ip_video_feed') }}">
+        </div>
+        <script src="{{ url_for('static', filename='js/roslib.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     </div>
 </body>
 </html>

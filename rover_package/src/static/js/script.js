@@ -141,9 +141,21 @@ gpsListener.subscribe(function (message) {
     document.getElementById('altitude').textContent = message.altitude.toFixed(2);
 });
 
+// Escuchar el tópico Geiger
+const geigerListener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/geiger',
+    messageType : 'std_msgs/Float64'
+});
+
+geigerListener.subscribe(function (message) {
+    // Asegúrate de tener un elemento con id="geiger_value" en tu HTML
+    document.getElementById('geiger_value').textContent = message.data.toFixed(3) + ' µSv/h';
+});
+
 const armListener = new ROSLIB.Topic({
     ros : ros,
-    name : '/actuators/command',
+    name : '/actuators_cmd',
     messageType : 'std_msgs/Int16MultiArray'
 });
 
