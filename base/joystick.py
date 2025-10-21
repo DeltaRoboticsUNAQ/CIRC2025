@@ -10,6 +10,7 @@ import pygame
 from time import sleep
 from time import time
 
+# Commit desde VSCode!
 DELAY = 0.5
 
 # ROS
@@ -103,4 +104,4 @@ def handle_joystick_input(joystick):
         return buttons, sticks, True
 
 if __name__ == '__main__':
-    
+    print()

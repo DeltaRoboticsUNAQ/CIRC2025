@@ -13,6 +13,7 @@ from time import time
 import logging
 import numpy as np
 
+# Commit desde VSCode!
 DELAY = 0.5
 HUMERUS_POS_URL = 'http://192.168.1.30:5000/move_humerus/'
 FOREARM_POS_URL = 'http://192.168.1.30:5000/move_forearm/'
