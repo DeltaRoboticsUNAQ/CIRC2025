@@ -10,7 +10,7 @@ class ChassisControl:
     def __init__(self, serial_port='/dev/ttyACM0', baudrate=9600):
         self.ser = serial.Serial(serial_port, baudrate, timeout=1)
         rospy.init_node('chassis_control')
-        rospy.Subscriber('cmd_vel', Twist, self.cmd_vel_callback)
+        rospy.Subscriber('cmd_vel', Twist, self.cmd_vel_callback, queue_size=1)
         rospy.loginfo("ChassisControl node started, listening to cmd_vel.")
 
     def cmd_vel_callback(self, msg):
